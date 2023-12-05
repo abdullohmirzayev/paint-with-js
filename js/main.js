@@ -1,7 +1,6 @@
 // GLOBAL VARIABLES
 const canvas = document.querySelector("canvas"),
-  toolBtns = document.querySelectorAll(".tool"),
-  fillColor = document.querySelector("#fill-color");
+  toolBtns = document.querySelectorAll(".tool")
 
 // VARIABLE WITH DEFAULT VALUE
 let ctx = canvas.getContext("2d"),
@@ -20,7 +19,7 @@ window.addEventListener("load", () => {
 });
 
 // START DRAWING
-const startDraw = (e) => {
+const startDrow = (e) => {
   isDrawing = true;
   prevMouseX = e.offsetX;
   prevMouseY = e.offsetY;
@@ -30,25 +29,19 @@ const startDraw = (e) => {
 };
 
 // DRAW RECTANGLE
-const drawRectangle = (e) => {
-  fillColor.checked
-    ? ctx.fillRect(
-        e.offsetX,
-        e.offsetY,
-        prevMouseX - e.offsetX,
-        prevMouseY - e.offsetY
-      )
-    : ctx.strokeRect(
-        e.offsetX,
-        e.offsetY,
-        prevMouseX - e.offsetX,
-        prevMouseY - e.offsetY
-      );
+const drowRectangle = (e) => {
+  ctx.strokeRect(
+    e.offsetX,
+    e.offsetY,
+    prevMouseX - e.offsetX,
+    prevMouseY - e.offsetY
+  );
 };
 
 // DRAWING
 const drawing = (e) => {
   if (!isDrawing) return;
+
   ctx.putImageData(snapshot, 0, 0);
 
   switch (selectedTool) {
@@ -57,7 +50,7 @@ const drawing = (e) => {
       ctx.stroke();
       break;
     case "rectangle":
-      drawRectangle();
+      drowRectangle();
       break;
     default:
       break;
@@ -78,6 +71,6 @@ const stopDraw = () => {
   isDrawing = false;
 };
 
-canvas.addEventListener("mousedown", startDraw);
+canvas.addEventListener("mousedown", startDrow);
 canvas.addEventListener("mousemove", drawing);
 canvas.addEventListener("mouseup", stopDraw);
