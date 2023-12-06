@@ -1,6 +1,7 @@
 // GLOBAL VARIABLES
 const canvas = document.querySelector("canvas"),
-  toolBtns = document.querySelectorAll(".tool");
+  toolBtns = document.querySelectorAll(".tool"),
+  fillColor = document.querySelector("#fill-color");
 
 // VARIABLES
 let ctx = canvas.getContext("2d"),
@@ -29,12 +30,29 @@ const startDraw = (e) => {
 
 // DRAW RECTANGLE
 const drowRectangle = (e) => {
-  ctx.strokeRect(
-    e.offsetX,
-    e.offsetY,
-    prevMouseX - e.offsetX,
-    prevMouseY - e.offsetY
-  );
+  fillColor.checked
+    ? ctx.fillRect(
+        e.offsetX,
+        e.offsetY,
+        prevMouseX - e.offsetX,
+        prevMouseY - e.offsetY
+      )
+    : ctx.strokeRect(
+        e.offsetX,
+        e.offsetY,
+        prevMouseX - e.offsetX,
+        prevMouseY - e.offsetY
+      );
+};
+
+// DRAW CIRCLE
+const drawCircle = (e) => {
+  ctx.beginPath();
+  const radius =
+    Math.sqrt(Math.pow(prevMouseX - e.offsetX, 2)) +
+    Math.pow(prevMouseY - e.offsetY, 2);
+  ctx.arc(prevMouseX, prevMouseY, radius, 0, 2 * Math.PI);
+  fillColor.checked ? ctx.fill() : ctx.stroke();
 };
 
 // DRAWING
@@ -49,6 +67,9 @@ const drawing = (e) => {
       break;
     case "rectangle":
       drowRectangle(e);
+      break;
+    case "circle":
+      drawCircle(e);
       break;
     default:
       break;
