@@ -1,14 +1,12 @@
 // GLOBAL VARIABLES
 const canvas = document.querySelector("canvas"),
-  toolBtns = document.querySelectorAll(".tool"),
-  fillColor = document.querySelector("#fill-color");
+  toolBtns = document.querySelectorAll(".tool");
 
-// VARIABLE WITH DEFAULT VALUE
+// VARIABLES
 let ctx = canvas.getContext("2d"),
   isDrawing = false,
   brushWidth = 5,
   selectedTool = "brush",
-  selectedColor = "#000",
   prevMouseX,
   prevMouseY,
   snapshot;
@@ -30,20 +28,13 @@ const startDraw = (e) => {
 };
 
 // DRAW RECTANGLE
-const drawRectangle = (e) => {
-  fillColor.checked
-    ? ctx.fillRect(
-        e.offsetX,
-        e.offsetY,
-        prevMouseX - e.offsetX,
-        prevMouseY - e.offsetY
-      )
-    : ctx.strokeRect(
-        e.offsetX,
-        e.offsetY,
-        prevMouseX - e.offsetX,
-        prevMouseY - e.offsetY
-      );
+const drowRectangle = (e) => {
+  ctx.strokeRect(
+    e.offsetX,
+    e.offsetY,
+    prevMouseX - e.offsetX,
+    prevMouseY - e.offsetY
+  );
 };
 
 // DRAWING
@@ -57,19 +48,20 @@ const drawing = (e) => {
       ctx.stroke();
       break;
     case "rectangle":
-      drawRectangle();
+      drowRectangle(e);
       break;
     default:
       break;
   }
 };
 
-// TOOLS BTN AND SET TO VARIABLES SELECTED TOOL
+// TOOLS BTN AND TO VARIABLES SELECTED TOOL
 toolBtns.forEach((btn) => {
   btn.addEventListener("click", () => {
     document.querySelector(".options .active").classList.remove("active");
     btn.classList.add("active");
     selectedTool = btn.id;
+    console.log(`Selected tool ${selectedTool}`);
   });
 });
 
