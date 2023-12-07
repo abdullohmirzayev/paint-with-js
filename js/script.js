@@ -4,9 +4,11 @@ const canvas = document.querySelector("canvas"),
   fillColor = document.querySelector("#fill-color"),
   sizeSlider = document.querySelector("#size-slider"),
   colorBtns = document.querySelectorAll(".colors .option"),
-  colorPicker = document.querySelector("#color-picker");
+  colorPicker = document.querySelector("#color-picker"),
+  clearCanvasBtn = document.querySelector(".clear-canvas"),
+  saveImageBtn = document.querySelector(".save-img");
 
-// VARIABLES WITH BEFAULT VALUE
+// VARIABLE WITH DEFAULT VALUE
 let ctx = canvas.getContext("2d"),
   isDrawing = false,
   brushWidth = 5,
@@ -16,10 +18,18 @@ let ctx = canvas.getContext("2d"),
   prevMouseY,
   snapshot;
 
+// SET CANVAS BACKGROUND
+const setCannvasBackground = () => {
+  ctx.fillStyle = "#fff";
+  ctx.fillRect(0, 0, canvas.width, canvas.height);
+  ctx.fillStyle = selectedColor;
+};
+
 // SET CANVAS WIDTH AND HEIGHT
 window.addEventListener("load", () => {
   canvas.width = canvas.offsetWidth;
   canvas.height = canvas.offsetHeight;
+  setCannvasBackground();
 });
 
 // START DRAWING
@@ -35,7 +45,7 @@ const startDraw = (e) => {
 };
 
 // DRAW RECTANGLE
-const drowRectangle = (e) => {
+const drawRectangle = (e) => {
   fillColor.checked
     ? ctx.fillRect(
         e.offsetX,
@@ -82,7 +92,7 @@ const drawing = (e) => {
       ctx.stroke();
       break;
     case "rectangle":
-      drowRectangle(e);
+      drawRectangle(e);
       break;
     case "circle":
       drawCircle(e);
@@ -100,13 +110,12 @@ const drawing = (e) => {
   }
 };
 
-// TOOLS BTN AND TO VARIABLES SELECTED TOOL
+// TOOLS BTN AND SET TO VARIABLES SELECTED TOOL
 toolBtns.forEach((btn) => {
   btn.addEventListener("click", () => {
     document.querySelector(".options .active").classList.remove("active");
     btn.classList.add("active");
     selectedTool = btn.id;
-    console.log(`Selected tool ${selectedTool}`);
   });
 });
 
@@ -129,6 +138,20 @@ colorBtns.forEach((btn) => {
 colorPicker.addEventListener("change", () => {
   colorPicker.parentElement.style.background = colorPicker.value;
   colorPicker.parentElement.click();
+});
+
+// CLEAR CANVAS BUTTON
+clearCanvasBtn.addEventListener("click", () => {
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  setCannvasBackground();
+});
+
+// SAVE LIKE IMAGE OUR PAINT
+saveImageBtn.addEventListener("click", () => {
+  const link = document.createElement("a");
+  link.download = `Aleee-paint${Date.now()}.jpg`;
+  link.href = canvas.toDataURL();
+  link.click();
 });
 
 // STOP DRAWING
