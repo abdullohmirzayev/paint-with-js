@@ -83,7 +83,7 @@ const drawing = (e) => {
       drawCircle(e);
       break;
     case "triangle":
-      e;
+      drawTriangle(e);
       break;
     default:
       break;
