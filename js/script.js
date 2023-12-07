@@ -90,6 +90,11 @@ const drawing = (e) => {
     case "triangle":
       drawTriangle(e);
       break;
+    case "eraser":
+      ctx.strokeStyle = "#fff";
+      ctx.lineTo(e.offsetX, e.offsetY);
+      ctx.stroke();
+      break;
     default:
       break;
   }
