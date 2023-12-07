@@ -1,9 +1,10 @@
 // GLOBAL VARIABLES
 const canvas = document.querySelector("canvas"),
   toolBtns = document.querySelectorAll(".tool"),
-  fillColor = document.querySelector("#fill-color");
+  fillColor = document.querySelector("#fill-color"),
+  sizeSlider = document.querySelector("#size-slider");
 
-// VARIABLES
+// VARIABLES WITH BEFAULT VALUE
 let ctx = canvas.getContext("2d"),
   isDrawing = false,
   brushWidth = 5,
@@ -82,7 +83,7 @@ const drawing = (e) => {
       drawCircle(e);
       break;
     case "triangle":
-      drawTriangle(e);
+      e;
       break;
     default:
       break;
@@ -98,6 +99,9 @@ toolBtns.forEach((btn) => {
     console.log(`Selected tool ${selectedTool}`);
   });
 });
+
+// CHANGE BRUSH WITH
+sizeSlider.addEventListener("change", () => (brushWidth = sizeSlider.value));
 
 // STOP DRAWING
 const stopDraw = () => {
